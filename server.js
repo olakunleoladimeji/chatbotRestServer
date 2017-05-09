@@ -9,7 +9,7 @@ restService.use(bodyParser.json());
 restService.get("/", function (req, res) {
     return res.send("Hello World!");
 })
-restService.post('/mcb', function (req, res) {
+restService.get('/mcb', function (req, res) {
     var action = req.body.result.action ? req.body.result.action : "There was a problem getting the action";
     switch (action) {
         case "calculator.questions":
