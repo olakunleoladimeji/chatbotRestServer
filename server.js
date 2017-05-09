@@ -75,10 +75,7 @@ restService.post('/mcb', function (req, res) {
             var user_ip = req.ip;
             var user_LatLng = ipGeoFinder.lookup(user_ip);
             var nearest_mcb = null;
-            //Get nearest mcb first
-            maps.placesNearby({
 
-            })
             maps.directions({
                     origin: user_LatLng.ll,
                     destination: "nearest mcb"
