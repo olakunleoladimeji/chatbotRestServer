@@ -20,9 +20,7 @@ restService.use(bodyParser.urlencoded({
     extended: true
 }));
 restService.use(bodyParser.json());
-restService.get("/", function (req, res) {
-    return res.send("Hello World!");
-});
+restService.use("/", express.static(__dirname + "/public"));
 restService.post('/mcb', function (req, res) {
     var action = req.body.result ? req.body.result.action : "There was a problem getting the action";
     var speech = "There was a problem with this request";
