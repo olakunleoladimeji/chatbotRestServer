@@ -3,7 +3,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mailer = require("nodemailer");
 const request = require("request");
-const ipGeoFinder = require("geoip-lite");
 const maps = require("@google/maps").createClient({
     key: "AIzaSyCttV-cq6VmgCXaA3l43zT7zrixbvufr7w"
 });
