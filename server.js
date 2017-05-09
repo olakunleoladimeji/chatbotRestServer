@@ -9,9 +9,8 @@ restService.use(bodyParser.json());
 restService.get("/", function (req, res) {
     return res.send("Hello World!");
 })
-restService.get('/mcb', function (req, res) {
-    var action = req.body.result.action ? req.body.result.action : "There was a problem getting the action";
-    var speech = "There was an error at this top!"
+restService.post('/mcb', function (req, res) {
+    var action = req.body.result ? req.body.result.actionType : "There was a problem getting the action";
     switch (action) {
         case "calculator.questions":
             var loan_type = req.body.result.parameters.loan_type;
