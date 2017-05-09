@@ -2,13 +2,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mailer = require("nodemailer");
+const ipGeoFinder = require("geoip-lite");
+const maps = require("@google/maps").createClient({
+    key: "AIzaSyCttV-cq6VmgCXaA3l43zT7zrixbvufr7w"
+});
 let transporter = mailer.createTransport({
     service: "gmail",
     auth: {
         user: "kunleoladimeji@gmail.com",
         pass: "obawalee"
     }
-})
+});
 const restService = express();
 restService.use(bodyParser.urlencoded({
     extended: true
@@ -19,7 +23,6 @@ restService.get("/", function (req, res) {
 });
 restService.post('/mcb', function (req, res) {
     var action = req.body.result ? req.body.result.action : "There was a problem getting the action";
-    console.log(req.body.result.parameters);
     var speech = "There was a problem with this request";
     console.log("Action is " + action);
     switch (action) {
@@ -38,7 +41,7 @@ restService.post('/mcb', function (req, res) {
                     var total_interest = ((monthly * payments) - principal).toFixed(2);
                     var monthly_payment = monthly.toFixed(2);
                     var entitled_to_amount = 1000;
-                    var speech = "Based on my calculations, you will be able to get a Rs." + total_payment + ", with an interest of Rs." + total_interest + " over a period of " + payments + "years and monthly payments of Rs. " +monthly_payment + " per month";
+                    var speech = "Based on my calculations, you will be able to get a Rs." + entitled_to_amount + ", with an interest of Rs." + total_interest + " over a period of " + payments + "years";
                 } else {
                     speech = "There was a problem with this request";
                 }
@@ -60,10 +63,34 @@ restService.post('/mcb', function (req, res) {
             }
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {
+                    speech = "There was an error sending the email!";
                     return console.log("Error!");
                 }
+                speech = "Email sent! A representative will be in touch shortly!";
                 console.log("Message %s sent: %s", info.messageId, info.response);
             });
+            break;
+        case 'nearestmcb.questions':
+            var location = req.body.result.parameters.location;
+            var user_ip = req.ip;
+            var user_LatLng = ipGeoFinder.lookup(user_ip);
+            var nearest_mcb = null;
+            //Get nearest mcb first
+            maps.placesNearby({
+
+            })
+            maps.directions({
+                    origin: user_LatLng.ll,
+                    destination: "nearest mcb"
+                }, (error, response) => {
+                    if (error) {
+                        return console.log(error);
+                    }
+                    speech = "Calculating your location shortly!";
+                    console.log(response);
+                }
+
+            )
             break;
         default:
             var speech = "There was a problem with this request";
