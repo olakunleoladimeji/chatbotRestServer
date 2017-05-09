@@ -38,7 +38,7 @@ restService.post('/mcb', function (req, res) {
                     var total_interest = ((monthly * payments) - principal).toFixed(2);
                     var monthly_payment = monthly.toFixed(2);
                     var entitled_to_amount = 1000;
-                    var speech = "Based on my calculations, you will be able to get a Rs." + entitled_to_amount + ", with an interest of Rs." + total_interest + " over a period of " + payments + "years";
+                    var speech = "Based on my calculations, you will be able to get a Rs." + total_payment + ", with an interest of Rs." + total_interest + " over a period of " + payments + "years and monthly payments of Rs. " +monthly_payment + " per month";
                 } else {
                     speech = "There was a problem with this request";
                 }
