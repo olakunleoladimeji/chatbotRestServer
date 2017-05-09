@@ -14,6 +14,7 @@ let transporter = mailer.createTransport({
         pass: "obawalee"
     }
 });
+
 const restService = express();
 restService.use(bodyParser.urlencoded({
     extended: true
@@ -74,8 +75,8 @@ restService.post('/mcb', function (req, res) {
         case 'nearestmcb.questions':
             var location = req.body.result.parameters.location;
             var user_ip = req.ip.replace("::ffff:", "");
-            request.get("http://api.ipinfodb.com/v3/ip-city/?key=" + ipinfodbKey + "&ip=" + user_ip, (error, response, body) => {
-                console.log(response);
+            request.get("http://api.ipinfodb.com/v3/ip-city/?key=" + ipinfodbKey + "&ip=" + user_ip + "&format=json", (error, response, body) => {
+                console.log(body);
             });
 
             if (user_LatLng.ll) {
