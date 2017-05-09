@@ -19,7 +19,7 @@ restService.get("/", function (req, res) {
 });
 restService.post('/mcb', function (req, res) {
     var action = req.body.result ? req.body.result.action : "There was a problem getting the action";
-    console.log(req.body.result);
+    console.log(req.body.result.parameters);
     var speech = "There was a problem with this request";
     console.log("Action is " + action);
     switch (action) {
