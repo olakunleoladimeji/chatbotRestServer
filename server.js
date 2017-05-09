@@ -2,10 +2,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mailer = require("nodemailer");
+const request = require("request");
 const ipGeoFinder = require("geoip-lite");
 const maps = require("@google/maps").createClient({
     key: "AIzaSyCttV-cq6VmgCXaA3l43zT7zrixbvufr7w"
 });
+const ipinfodbKey = "4fc168f6017c0fc8fdee2142673d69aaa625260bec6bab276039588048ed0d0c";
 let transporter = mailer.createTransport({
     service: "gmail",
     auth: {
@@ -73,8 +75,10 @@ restService.post('/mcb', function (req, res) {
         case 'nearestmcb.questions':
             var location = req.body.result.parameters.location;
             var user_ip = req.ip.replace("::ffff:", "");
-            var user_LatLng = ipGeoFinder.lookup("10.69.198.55");
-            console.log("User IP is" + user_ip + "and his location is " + user_LatLng);
+            request.get("http://api.ipinfodb.com/v3/ip-city/?key=" + ipinfodbKey + "&ip=" + user_ip, (error, response, body) => {
+                console.log(response);
+            });
+
             if (user_LatLng.ll) {
                 maps.directions({
                         origin: user_LatLng.ll,
