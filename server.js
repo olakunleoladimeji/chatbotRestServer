@@ -78,23 +78,23 @@ restService.post('/mcb', function (req, res) {
             request.get("http://api.ipinfodb.com/v3/ip-city/?key=" + ipinfodbKey + "&ip=" + user_ip + "&format=json", (error, response, body) => {
                 console.log(body);
             });
+            speech = "Sorry, we could not process your location, please try later!";
+            // if (user_LatLng.ll) {
+            //     maps.directions({
+            //             origin: user_LatLng.ll,
+            //             destination: "nearest mcb"
+            //         }, (error, response) => {
+            //             if (error) {
+            //                 return console.log(error);
+            //             }
+            //             speech = "Calculating your location shortly!";
+            //             console.log(response);
+            //         }
 
-            if (user_LatLng.ll) {
-                maps.directions({
-                        origin: user_LatLng.ll,
-                        destination: "nearest mcb"
-                    }, (error, response) => {
-                        if (error) {
-                            return console.log(error);
-                        }
-                        speech = "Calculating your location shortly!";
-                        console.log(response);
-                    }
-
-                )
-            } else {
-                speech = "Sorry, I could not determine your location!";
-            }
+            //     )
+            // } else {
+            //     speech = "Sorry, I could not determine your location!";
+            // }
 
             break;
         default:
