@@ -74,20 +74,23 @@ restService.post('/mcb', function (req, res) {
             var location = req.body.result.parameters.location;
             var user_ip = req.ip;
             var user_LatLng = ipGeoFinder.lookup(user_ip);
+            console.log("User IP is" + user_ip + "and his location is " + user_LatLng);
             var nearest_mcb = null;
-
-            maps.directions({
-                    origin: user_LatLng.ll,
-                    destination: "nearest mcb"
-                }, (error, response) => {
-                    if (error) {
-                        return console.log(error);
+            if (user_LatLng.ll) {
+                maps.directions({
+                        origin: user_LatLng.ll,
+                        destination: "nearest mcb"
+                    }, (error, response) => {
+                        if (error) {
+                            return console.log(error);
+                        }
+                        speech = "Calculating your location shortly!";
+                        console.log(response);
                     }
-                    speech = "Calculating your location shortly!";
-                    console.log(response);
-                }
 
-            )
+                )
+            }
+
             break;
         default:
             var speech = "There was a problem with this request";
