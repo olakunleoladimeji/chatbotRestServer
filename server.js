@@ -11,6 +11,7 @@ restService.get("/", function (req, res) {
 })
 restService.get('/mcb', function (req, res) {
     var action = req.body.result.action ? req.body.result.action : "There was a problem getting the action";
+    var speech = "There was an error at this top!"
     switch (action) {
         case "calculator.questions":
             var loan_type = req.body.result.parameters.loan_type;
